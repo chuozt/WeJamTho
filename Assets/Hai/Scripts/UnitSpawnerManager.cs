@@ -12,8 +12,9 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
 
     private int turnCount = 0;
     private float hazardSpawnChance = 0.2f;
-    private float tornadoRate = 0.1f;
-    private float lightningRate = 0.05f;
+    private float fireRate = 0.4f;
+    private float tornadoRate = 0.35f;
+    private float lightningRate = 0.25f;
     private UnitSlot[,] unitSlots;
 
     void OnEnable()
@@ -44,15 +45,20 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
         // int houseCount = Random.Range(1, 3);
         // for (int i = 0; i < houseCount; i++)
         // {
-            UnitSlot emptySlot = GetRandomEmptySlot();
-            if (emptySlot != null)
-            {
-                int houseIndex = Random.Range(0, housePrefabs.Count);
-                GameObject newHouse = Instantiate(housePrefabs[houseIndex], emptySlot.transform.position, Quaternion.identity);
-                newHouse.transform.SetParent(emptySlot.transform);
-                newHouse.transform.localPosition = Vector3.zero;
-                emptySlot.Unit = newHouse.GetComponent<Unit>();
-            }
+
+        float randomNum = Random.Range(0f, 1f);
+        if(randomNum > 0.7f)
+            return;
+
+        UnitSlot emptySlot = GetRandomEmptySlotForHouses();
+        if (emptySlot != null)
+        {
+            int houseIndex = Random.Range(0, housePrefabs.Count);
+            GameObject newHouse = Instantiate(housePrefabs[houseIndex], emptySlot.transform.position, Quaternion.identity);
+            newHouse.transform.SetParent(emptySlot.transform);
+            newHouse.transform.localPosition = Vector3.zero;
+            emptySlot.Unit = newHouse.GetComponent<Unit>();
+        }
         // }
     }
 
@@ -62,38 +68,60 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
             return;
 
         float chance = Random.value;
+        float total = fireRate + tornadoRate + lightningRate;
+
         if (chance < hazardSpawnChance)
         {
-            UnitSlot emptySlot = GetRandomEmptySlot();
+            UnitSlot emptySlot = GetRandomEmptySlotForHazards();
             if (emptySlot != null)
             {
                 float hazardTypeChance = Random.value;
                 GameObject hazardPrefab = null;
 
-                if (hazardTypeChance < 0.85f)
+                // if (hazardTypeChance < 0.85f)
+                //     hazardPrefab = firePrefab;
+                // else if (hazardTypeChance < 0.85f + tornadoRate)
+                //     hazardPrefab = tornadoPrefab;
+                // else
+                //     hazardPrefab = lightningPrefab;
+
+                if(fireRate / total > chance)
                     hazardPrefab = firePrefab;
-                else if (hazardTypeChance < 0.85f + tornadoRate)
+                else if((tornadoRate / total) + fireRate/total > chance && turnCount > 8)
                     hazardPrefab = tornadoPrefab;
-                else
+                else if((lightningRate / total) + (fireRate + tornadoRate)/total >= chance && turnCount > 15)
                     hazardPrefab = lightningPrefab;
 
                 GameObject newHazard = Instantiate(hazardPrefab, emptySlot.transform.position, Quaternion.identity);
                 newHazard.transform.SetParent(emptySlot.transform);
                 newHazard.transform.localPosition = Vector3.zero;
-                emptySlot.Unit = newHazard.GetComponent<Unit>();
-
-                // Increase difficulty for future turns
-                IncreaseHazardDifficulty();
+                emptySlot.UnitHazard = newHazard.GetComponent<UnitHazard>();
             }
         }
+
+        IncreaseHazardDifficulty();
     }
 
-    private UnitSlot GetRandomEmptySlot()
+    private UnitSlot GetRandomEmptySlotForHazards()
     {
         List<UnitSlot> emptySlots = new List<UnitSlot>();
         foreach (UnitSlot slot in unitSlots)
         {
-            if (slot.Unit == null)
+            if (slot.UnitHazard == null && (slot.Unit == null || slot.Unit.UnitType != UnitType.Rock))
+                emptySlots.Add(slot);
+        }
+
+        if (emptySlots.Count == 0) return null;
+
+        return emptySlots[Random.Range(0, emptySlots.Count)];
+    }
+
+    private UnitSlot GetRandomEmptySlotForHouses()
+    {
+        List<UnitSlot> emptySlots = new List<UnitSlot>();
+        foreach (UnitSlot slot in unitSlots)
+        {
+            if (slot.Unit == null && slot.UnitHazard == null)
                 emptySlots.Add(slot);
         }
 
@@ -104,8 +132,15 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
 
     private void IncreaseHazardDifficulty()
     {
-        hazardSpawnChance += 0.02f; // Increase hazard spawn chance each turn
-        tornadoRate += 0.01f; // Increase tornado rate each turn
-        lightningRate += 0.005f; // Increase lightning rate each turn
+        Debug.Log("Turn: " + turnCount);
+        if(turnCount % 3 == 0)
+        {
+            hazardSpawnChance += 0.085f;
+            hazardSpawnChance *= 0.9f;
+            Debug.Log(hazardSpawnChance);
+        }
+        fireRate -= 0.01f;
+        tornadoRate += 0.02f;
+        lightningRate += 0.05f;
     }
 }

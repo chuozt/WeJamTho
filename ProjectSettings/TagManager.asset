@@ -49,3 +49,6 @@ TagManager:
   - name: Unit
     uniqueID: 1585183257
     locked: 0
+  - name: Hazard
+    uniqueID: 203347259
+    locked: 0
