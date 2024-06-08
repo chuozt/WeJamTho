@@ -346,28 +346,25 @@ public class UnitManager : Singleton<UnitManager>
 
     void CheckForSpecialMoves(Vector2Int cords)
     {
-        
-
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             //CheckForGrid();
-            onEndMove?.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            onEndMove?.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            onEndMove?.Invoke();
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            onEndMove?.Invoke();
+
         }
+
+        onEndMove?.Invoke();
     }
 
     void CheckForGrid(Unit unit)
@@ -407,6 +404,7 @@ public class UnitManager : Singleton<UnitManager>
         selectedUnitSlot = targetSlot;
 
         DeselectState();
+        onEndMove?.Invoke();
     }
 
     void SwapState(UnitSlot slot1, UnitSlot slot2)
@@ -436,6 +434,7 @@ public class UnitManager : Singleton<UnitManager>
         selectedUnitSlot = null;
 
         DeselectState();
+        onEndMove?.Invoke();
     }
 
     void MergeState(UnitSlot slot)
@@ -451,6 +450,7 @@ public class UnitManager : Singleton<UnitManager>
         Destroy(slot.Unit.gameObject);
         slot.Unit = newUnit.GetComponent<Unit>();
         DeselectState();
+        onEndMove?.Invoke();
     }
 
     void GraduallyMoveLocal(Transform objectToMove)
