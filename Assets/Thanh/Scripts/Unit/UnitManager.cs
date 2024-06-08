@@ -46,7 +46,7 @@ public class UnitManager : Singleton<UnitManager>
             Collider2D grid = Physics2D.OverlapPoint(gridCord, tileLayer);
             if(grid != null)
             {
-                UnitHouse currentUnit = grid.GetComponentInChildren<UnitHouse>();
+                UnitParent currentUnit = grid.GetComponentInChildren<UnitParent>();
                 if(currentUnit != null && currentUnit.UnitType != UnitType.House)
                     return;
 
@@ -54,7 +54,7 @@ public class UnitManager : Singleton<UnitManager>
                 {
                     //If there is an unit on the slot
                     if(currentUnit != null)
-                        SelectState(currentUnit, gridCord);
+                        SelectState((UnitHouse)currentUnit, gridCord);
                 }
                 else
                 {
@@ -73,10 +73,16 @@ public class UnitManager : Singleton<UnitManager>
                         MoveState(grid.transform);
                     else
                     {
-                        if(selectedUnit.UnitType == currentUnit.UnitType && selectedUnit.HouseLevel == currentUnit.HouseLevel)
-                            MergeState(currentUnit);
-                        else if(selectedUnit.UnitType == currentUnit.UnitType && selectedUnit.HouseLevel != currentUnit.HouseLevel)
-                            SwapState(currentUnit);
+                        UnitHouse tempUnit;
+                        if(currentUnit.UnitType == UnitType.Rock)
+                            return;
+                        
+                        tempUnit = (UnitHouse)currentUnit;
+
+                        if(selectedUnit.UnitType == currentUnit.UnitType && selectedUnit.HouseLevel == tempUnit.HouseLevel)
+                            MergeState(tempUnit);
+                        else if(selectedUnit.UnitType == currentUnit.UnitType && selectedUnit.HouseLevel != tempUnit.HouseLevel)
+                            SwapState(tempUnit);
                     }
                 }
             }

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4111426443116503567}
   - component: {fileID: 6927840119403087142}
-  - component: {fileID: 1786608869128552128}
   - component: {fileID: 3094511919405811605}
+  - component: {fileID: -3032553985256550010}
   m_Layer: 7
   m_Name: Rock
   m_TagString: Untagged
@@ -86,19 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1786608869128552128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 689061555087137688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5a78291f466e96489b9a6114561194c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  unitType: 2
 --- !u!95 &3094511919405811605
 Animator:
   serializedVersion: 5
@@ -120,3 +107,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-3032553985256550010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689061555087137688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2756fd0d6a76f04e9febc77dc6fc9e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 2
