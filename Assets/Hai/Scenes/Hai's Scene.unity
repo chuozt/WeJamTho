@@ -1170,6 +1170,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4053177268495728716, guid: 8ceedfa6ee071d44a812d4c930b12294, type: 3}
   m_PrefabInstance: {fileID: 1409669756}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &896127218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 896127220}
+  - component: {fileID: 896127219}
+  m_Layer: 0
+  m_Name: UnitSpawnerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &896127219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896127218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29ab97889b2196b4e82c9a3d8b43e4a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  housePrefabs: []
+  firePrefab: {fileID: 0}
+  tornadoPrefab: {fileID: 0}
+  lightningPrefab: {fileID: 0}
+  numberOfTurnsBeforeHazards: 8
+--- !u!4 &896127220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896127218}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.272028, y: -0.11876743, z: -0.002011537}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &902818455 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7062654493979525083, guid: 78c90057030c8ee49941aa90d75e04de, type: 3}
