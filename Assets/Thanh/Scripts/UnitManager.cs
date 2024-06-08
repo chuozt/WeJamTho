@@ -16,10 +16,10 @@ public class UnitManager : Singleton<UnitManager>
             mouseWorldPosition.z = 0; // Ensure the z-coordinate is 0 since we're in 2D space
 
             // Calculate grid position
-            Vector3Int gridPosition = (Vector3Int)WorldToGrid(mouseWorldPosition);
+            Vector2Int gridPosition = WorldToGrid(mouseWorldPosition);
 
             Debug.Log("Grid Position: " + gridPosition);
-            GameObject obj = grid.CellToWorld(gridPosition);
+            Collider2D col = Physics2D.OverlapPoint()
             
         }
     }
