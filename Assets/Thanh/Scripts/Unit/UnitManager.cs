@@ -133,6 +133,12 @@ public class UnitManager : Singleton<UnitManager>
 
     void MergeState(UnitParent unit)
     {
+        int index = (int)unit.HouseLevel + 1;
+        GameObject newUnit = Instantiate(housePrefabs[index], Vector3.zero, Quaternion.identity);
+        newUnit.transform.SetParent(unit.transform.parent);
+        newUnit.transform.localPosition = Vector3.zero;
+        Destroy(selectedUnit.gameObject);
+        Destroy(unit.gameObject);
         DeselectState();
     }
 
