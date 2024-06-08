@@ -220,7 +220,7 @@ public class UnitManager : Singleton<UnitManager>
     [SerializeField] Labelller[] tilesCords;
     [SerializeField] LayerMask tileLayer;
     [SerializeField] List<GameObject> housePrefabs;
-    [SerializeField] UnitSlot[,] unitSlots = new UnitSlot[5, 5];
+    public UnitSlot[,] unitSlots = new UnitSlot[5, 5];
 
     [SerializeField] GameObject specialGridPrefabs;
     int maximumSpecialGridSpawn = 3;

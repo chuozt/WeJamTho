@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
 {
@@ -19,18 +18,18 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
 
     void OnEnable()
     {
-        UnitManager.Instance.onEndMove += OnNewTurn;
+        UnitManager.onEndMove += OnNewTurn;
     }
 
     void OnDisable()
     {
-        
+        UnitManager.onEndMove -= OnNewTurn;
     }
 
     void Start()
     {
         // Initialize unitSlots or get them from another manager
-
+        unitSlots = UnitManager.Instance.unitSlots;
     }
 
     public void OnNewTurn()
@@ -42,9 +41,9 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
 
     private void SpawnHouses()
     {
-        int houseCount = Random.Range(1, 3);
-        for (int i = 0; i < houseCount; i++)
-        {
+        // int houseCount = Random.Range(1, 3);
+        // for (int i = 0; i < houseCount; i++)
+        // {
             UnitSlot emptySlot = GetRandomEmptySlot();
             if (emptySlot != null)
             {
@@ -54,7 +53,7 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
                 newHouse.transform.localPosition = Vector3.zero;
                 emptySlot.Unit = newHouse.GetComponent<Unit>();
             }
-        }
+        // }
     }
 
     private void TrySpawnHazard()
