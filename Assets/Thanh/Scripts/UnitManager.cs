@@ -1,9 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitManager : Singleton<UnitManager>
 {
     [SerializeField] Labelller[] tilesCords;
     [SerializeField] LayerMask tileLayer;
+    [SerializeField] List<GameObject> housePrefabs;
     Vector2Int[,] tilesCords2DArray = new Vector2Int[5,5];
 
     UnitParent selectedUnit;
