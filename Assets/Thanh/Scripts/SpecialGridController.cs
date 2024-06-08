@@ -28,7 +28,7 @@ public class SpecialGridController : MonoBehaviour
         }
     }
 
-    void CheckForMoves(UnitParent unit)
+    void CheckForMoves(Unit unit)
     {
         if (unit.UnitType == UnitType.Rock)
             return;

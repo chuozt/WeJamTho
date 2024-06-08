@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitRock : UnitParent
+public class UnitRock : Unit
 {
     public override void Awake()
     {

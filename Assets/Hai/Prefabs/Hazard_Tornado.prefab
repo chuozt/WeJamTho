@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de2571938c64507488f96423d91b2cce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitType: 1
   hazardType: 0
   preSpawnMovesLeft: 1
   movesLeft: 2

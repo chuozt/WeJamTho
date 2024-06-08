@@ -6,6 +6,11 @@ public class HazardSpawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> hazardList;
 
+    void Start()
+    {
+        
+    }
+
     void Update()
     {
         

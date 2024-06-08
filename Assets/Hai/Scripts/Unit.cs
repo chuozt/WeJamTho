@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class UnitParent : MonoBehaviour
+public class Unit : MonoBehaviour
 {
     private Animator anim;
-    protected UnitType unitType;
+    [SerializeField] protected UnitType unitType;
     public UnitType UnitType => unitType;
 
     public virtual void Awake()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitHazard : UnitParent
+public class UnitHazard : Unit
 {
     [SerializeField] private HazardType hazardType;
     [SerializeField] private int preSpawnMovesLeft = 1;
@@ -30,7 +30,7 @@ public class UnitHazard : UnitParent
         switch(hazardType)
         {
             case HazardType.Fire:
-
+                
                 break;
             case HazardType.Tornado:
 

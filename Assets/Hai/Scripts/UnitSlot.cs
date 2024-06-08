@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class UnitSlot : MonoBehaviour
 {
-    [HideInInspector] public UnitParent unit;
-    public bool IsSpecialGrid = false;
-    
+    [SerializeField] private Unit unit;
+    public bool IsSpecialGrid { get; set; } = false;
+    public Unit Unit {get{ return unit; } set{ unit = value; }}
+
+    void Awake()
+    {
+        unit = GetComponentInChildren<Unit>();
+    }
 }

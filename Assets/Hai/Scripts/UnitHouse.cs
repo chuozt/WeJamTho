@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitHouse : UnitParent
+public class UnitHouse : Unit
 {
     [SerializeField] HouseLevel houseLevel;
     bool isLevelMax = false;
