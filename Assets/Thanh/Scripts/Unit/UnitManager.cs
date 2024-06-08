@@ -70,7 +70,7 @@ public class UnitManager : Singleton<UnitManager>
 
                     //If the slot is empty, then move the current unit to that slot
                     if(currentUnit == null)
-                        MoveState(grid);
+                        MoveState(grid.transform);
                     else
                     {
                         if(selectedUnit.UnitType == currentUnit.UnitType && selectedUnit.HouseLevel == currentUnit.HouseLevel)
@@ -111,10 +111,10 @@ public class UnitManager : Singleton<UnitManager>
         Debug.Log("Deselected");
     }
 
-    void MoveState(Collider2D grid)
+    void MoveState(Transform targetGrid)
     {
         unitSelected = false;
-        selectedUnit.transform.SetParent(grid.transform);
+        selectedUnit.transform.SetParent(transform);
         selectedUnit.transform.localPosition = Vector3.zero;
         DeselectState();
     }
