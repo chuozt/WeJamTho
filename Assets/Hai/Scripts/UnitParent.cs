@@ -6,13 +6,8 @@ using UnityEditor;
 public class UnitParent : MonoBehaviour
 {
     private Animator anim;
-    protected UnitType unitType;
-    protected HouseLevel houseLevel;
-    protected bool isLevelMax = false;
-
+    [SerializeField] protected UnitType unitType;
     public UnitType UnitType => unitType;
-    public HouseLevel HouseLevel => houseLevel;
-    public bool IsLevelMax => isLevelMax;
 
     public virtual void Awake()
     {

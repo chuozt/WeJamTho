@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7448996546835327928}
   - component: {fileID: 3918389117872125158}
-  - component: {fileID: 8552559871605615407}
   - component: {fileID: 7904802883458880670}
+  - component: {fileID: -7966837256034888257}
   m_Layer: 7
   m_Name: HouseLv2
   m_TagString: Untagged
@@ -86,19 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8552559871605615407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7977551561725383719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5a78291f466e96489b9a6114561194c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  anim: {fileID: 0}
 --- !u!95 &7904802883458880670
 Animator:
   serializedVersion: 5
@@ -120,3 +107,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-7966837256034888257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7977551561725383719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f51ae231086c5d4cb5c1751e809458b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 0
+  houseLevel: 1
+  isLevelMax: 0

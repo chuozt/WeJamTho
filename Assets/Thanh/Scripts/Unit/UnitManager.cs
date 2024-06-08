@@ -9,7 +9,7 @@ public class UnitManager : Singleton<UnitManager>
     [SerializeField] List<GameObject> housePrefabs;
     Vector2Int[,] tilesCords2DArray = new Vector2Int[5,5];
 
-    UnitParent selectedUnit;
+    UnitHouse selectedUnit;
     bool unitSelected = false;
     Vector2Int selectedTileCord;
     Color originalColor;
@@ -46,7 +46,7 @@ public class UnitManager : Singleton<UnitManager>
             Collider2D grid = Physics2D.OverlapPoint(gridCord, tileLayer);
             if(grid != null)
             {
-                UnitParent currentUnit = grid.GetComponentInChildren<UnitParent>();
+                UnitHouse currentUnit = grid.GetComponentInChildren<UnitHouse>();
                 if(currentUnit != null && currentUnit.UnitType != UnitType.House)
                     return;
 
@@ -92,7 +92,7 @@ public class UnitManager : Singleton<UnitManager>
         return false;
     }
 
-    void SelectState(UnitParent unit, Vector2Int gridCord)
+    void SelectState(UnitHouse unit, Vector2Int gridCord)
     {
         unitSelected = true;
         selectedUnit = unit;
@@ -114,12 +114,12 @@ public class UnitManager : Singleton<UnitManager>
     void MoveState(Transform targetGrid)
     {
         unitSelected = false;
-        selectedUnit.transform.SetParent(transform);
+        selectedUnit.transform.SetParent(targetGrid);
         selectedUnit.transform.localPosition = Vector3.zero;
         DeselectState();
     }
 
-    void SwapState(UnitParent unit)
+    void SwapState(UnitHouse unit)
     {
         Transform tempParrent = selectedUnit.transform.parent;
 
@@ -131,7 +131,7 @@ public class UnitManager : Singleton<UnitManager>
         DeselectState();
     }
 
-    void MergeState(UnitParent unit)
+    void MergeState(UnitHouse unit)
     {
         int index = (int)unit.HouseLevel + 1;
         GameObject newUnit = Instantiate(housePrefabs[index], Vector3.zero, Quaternion.identity);
