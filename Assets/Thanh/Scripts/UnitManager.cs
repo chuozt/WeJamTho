@@ -9,8 +9,14 @@ public class UnitManager : Singleton<UnitManager>
     UnitParent selectedUnit;
     bool unitSelected = false;
     Vector2Int selectedTileCord;
+    Color originalColor;
 
     void Start()
+    {
+        SaveTilesCordsIn2DArray();
+    }
+
+    void SaveTilesCordsIn2DArray()
     {
         int currentIndex = 0;
         for(int i = 0; i < 5; i++)
@@ -88,13 +94,14 @@ public class UnitManager : Singleton<UnitManager>
         unitSelected = true;
         selectedUnit = unit;
         selectedTileCord = gridCord;
+        originalColor = selectedUnit.GetComponent<SpriteRenderer>().color;
         selectedUnit.GetComponent<SpriteRenderer>().color = Color.green;
         Debug.Log("Selecting");
     }
 
     void DeselectState()
     {
-        selectedUnit.GetComponent<SpriteRenderer>().color = Color.yellow;
+        selectedUnit.GetComponent<SpriteRenderer>().color = originalColor;
         unitSelected = false;
         selectedUnit = null;
         selectedTileCord = Vector2Int.zero;
