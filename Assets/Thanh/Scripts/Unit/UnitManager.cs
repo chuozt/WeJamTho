@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
+
 public class UnitManager : Singleton<UnitManager>
 {
     [SerializeField] Labelller[] tilesCords;
     [SerializeField] LayerMask tileLayer;
     [SerializeField] List<GameObject> housePrefabs;
     Vector2Int[,] tilesCords2DArray = new Vector2Int[5,5];
+    int[,] special2DGridArray = new int[5,5];
+
+    int maximumSpecialGridSpawn = 3;
+    int count = 0;
+    List<Vector2Int> availablePoints = new List<Vector2Int>();
+    [SerializeField] GameObject specialGridPrefabs;
 
     UnitHouse selectedUnit;
     bool unitSelected = false;
@@ -20,6 +28,7 @@ public class UnitManager : Singleton<UnitManager>
     void Start()
     {
         SaveTilesCordsIn2DArray();
+        InitSpecialGrid();
     }
 
     void SaveTilesCordsIn2DArray()
@@ -27,12 +36,31 @@ public class UnitManager : Singleton<UnitManager>
         int currentIndex = 0;
         for(int i = 0; i < 5; i++)
         {
-            for(int j = 0; j < 5; j++)
+            
+            for (int j = 0; j < 5; j++)
             {
                 tilesCords2DArray[i,j] = tilesCords[currentIndex].Cords;
                 currentIndex++;
+                availablePoints.Add(new Vector2Int(i,j));
             }
         }
+    }
+
+    void InitSpecialGrid()
+    {
+        int randomYIndex = UnityEngine.Random.Range(0, 4);
+        int randomXIndex = UnityEngine.Random.Range(0, 4);
+        if (special2DGridArray[randomXIndex,randomYIndex] == 0)
+        {
+            special2DGridArray[randomXIndex, randomYIndex] = 1;
+            count++;
+            //GameObject newUnit = Instantiate(specialGridPrefabs, tilesCords2DArray[randomXIndex, randomYIndex], Quaternion.identity);
+        }
+
+        //GameObject newUnit = Instantiate(specialGridPrefabs, new Vector3(randomPosition.x, randomPosition.y, 0), Quaternion.identity);
+        //newUnit.transform.SetParent(.transform.parent);
+        //newUnit.transform.localPosition = Vector3.zero;
+
     }
 
     private void Update()
@@ -148,6 +176,8 @@ public class UnitManager : Singleton<UnitManager>
     void MergeState(UnitHouse unit)
     {
         int index = (int)unit.HouseLevel + 1;
+        if (index == 4)
+            return;
         GameObject newUnit = Instantiate(housePrefabs[index], Vector3.zero, Quaternion.identity);
         newUnit.transform.SetParent(unit.transform.parent);
         newUnit.transform.localPosition = Vector3.zero;
