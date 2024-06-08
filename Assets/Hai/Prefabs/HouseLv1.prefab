@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4053177268495728716}
   - component: {fileID: 5560082122015031722}
   - component: {fileID: 1896007356225882858}
+  - component: {fileID: 3821141185910892997}
   m_Layer: 7
   m_Name: HouseLv1
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5560082122015031722
 SpriteRenderer:
@@ -97,5 +98,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5a78291f466e96489b9a6114561194c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitType: 0
-  houseLevel: 0
+  anim: {fileID: 0}
+--- !u!95 &3821141185910892997
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3015979796097332681}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: aaa1862c259b2c04b9fc348d213771d7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -1,15 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class UnitParent : MonoBehaviour
 {
-    [SerializeField] protected UnitType unitType;
+    private Animator anim;
+    protected UnitType unitType;
+    protected HouseLevel houseLevel;
+    protected bool isLevelMax = false;
+
     public UnitType UnitType => unitType;
-    [SerializeField] protected HouseLevel houseLevel;
     public HouseLevel HouseLevel => houseLevel;
-    [SerializeField] protected bool isLevelMax = false;
     public bool IsLevelMax => isLevelMax;
+
+    public virtual void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
+
+    protected void OnUnitDestroy()
+    {
+        anim.SetTrigger("Disappear");
+    }
 }
 
 public enum UnitType
