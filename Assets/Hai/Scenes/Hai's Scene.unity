@@ -1804,7 +1804,11 @@ MonoBehaviour:
   tileLayer:
     serializedVersion: 2
     m_Bits: 512
-  housePrefabs: []
+  housePrefabs:
+  - {fileID: 3015979796097332681, guid: 8ceedfa6ee071d44a812d4c930b12294, type: 3}
+  - {fileID: 7977551561725383719, guid: 5da4faf388e4381458e1f7a31b5edc93, type: 3}
+  - {fileID: 7977551561725383719, guid: 74c3f14ba1dbb954695964ebee9ee1fa, type: 3}
+  - {fileID: 7977551561725383719, guid: a3231fe8f68e6f34bad8744443c681a2, type: 3}
 --- !u!4 &1189411962
 Transform:
   m_ObjectHideFlags: 0
