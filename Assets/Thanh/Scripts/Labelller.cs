@@ -6,9 +6,11 @@ using TMPro;
 [ExecuteAlways]
 public class Labelller : MonoBehaviour
 {
-    TextMeshPro label;
-    public Vector2Int cords = new Vector2Int();
+    [SerializeField] private Vector2Int cords = new Vector2Int();
+    public Vector2Int Cords => cords;
+
     GridManager gridManager;
+    TextMeshPro label;
 
     public void Awake()
     {
@@ -27,9 +29,9 @@ public class Labelller : MonoBehaviour
     public void DisplayCords()
     {
         if (!gridManager) return;
-        cords.x = Mathf.RoundToInt(transform.position.x / gridManager.UnityGridSize);
-        cords.y = Mathf.RoundToInt(transform.position.y / gridManager.UnityGridSize);
+        cords.x = Mathf.Abs(Mathf.RoundToInt(transform.position.y / gridManager.UnityGridSize));
+        cords.y = Mathf.RoundToInt(transform.position.x / gridManager.UnityGridSize);
 
-        label.text = $"{cords.y},{cords.x}";
+        label.text = $"{cords.x},{cords.y}";
     }
 }

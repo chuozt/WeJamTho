@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 5422493075320042001}
   - component: {fileID: 4700191050144610183}
   - component: {fileID: 7062654493979525083}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tile
   m_TagString: Tile
   m_Icon: {fileID: 0}
@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97df5aae5dfc19f48bde2242467b7a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cords: {x: 0, y: 0}
 --- !u!1 &6714264878540460105
 GameObject:
   m_ObjectHideFlags: 0

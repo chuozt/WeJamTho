@@ -4,16 +4,24 @@ using UnityEngine;
 
 public class UnitParent : MonoBehaviour
 {
-    //Same animation
-    //Same type of movement
-    
-    void Start()
-    {
-        
-    }
+    [SerializeField] protected UnitType unitType;
+    public UnitType UnitType => unitType;
+    [SerializeField] protected HouseLevel houseLevel;
+    public HouseLevel HouseLevel => houseLevel;
+}
 
-    void Update()
-    {
-        
-    }
+public enum UnitType
+{
+    House,
+    Hazard,
+    Rock
+}
+
+public enum HouseLevel
+{
+    Lv1,
+    Lv2,
+    Lv3,
+    Lv4,
+    Main
 }
