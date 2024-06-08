@@ -59,7 +59,7 @@ public class UnitManager : Singleton<UnitManager>
                 else
                 {
                     //If the player select that slot again, then Deselect
-                    if(currentUnit != null && selectedUnit == currentUnit)
+                    if(currentUnit != null && (selectedUnit == currentUnit || selectedUnit.IsLevelMax))
                     {
                         DeselectState();
                         return;

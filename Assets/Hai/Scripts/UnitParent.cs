@@ -8,6 +8,8 @@ public class UnitParent : MonoBehaviour
     public UnitType UnitType => unitType;
     [SerializeField] protected HouseLevel houseLevel;
     public HouseLevel HouseLevel => houseLevel;
+    [SerializeField] protected bool isLevelMax = false;
+    public bool IsLevelMax => isLevelMax;
 }
 
 public enum UnitType
