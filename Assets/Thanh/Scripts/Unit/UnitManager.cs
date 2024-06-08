@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class UnitManager : Singleton<UnitManager>
 {
@@ -13,6 +14,8 @@ public class UnitManager : Singleton<UnitManager>
     bool unitSelected = false;
     Vector2Int selectedTileCord;
     Color originalColor;
+
+    public static event Action onEndMove;
 
     void Start()
     {
@@ -59,7 +62,7 @@ public class UnitManager : Singleton<UnitManager>
                 else
                 {
                     //If the player select that slot again, then Deselect
-                    if(currentUnit != null && (selectedUnit == currentUnit || selectedUnit.IsLevelMax))
+                    if(currentUnit != null && selectedUnit == currentUnit)
                     {
                         DeselectState();
                         return;
