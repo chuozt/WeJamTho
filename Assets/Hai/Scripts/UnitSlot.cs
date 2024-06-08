@@ -6,4 +6,5 @@ public class UnitSlot : MonoBehaviour
 {
     [HideInInspector] public UnitParent unit;
     public bool IsSpecialGrid = false;
+    
 }

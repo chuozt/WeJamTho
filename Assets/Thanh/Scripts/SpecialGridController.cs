@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpecialGridController : MonoBehaviour
 {
+
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.UpArrow)) 
@@ -26,4 +27,13 @@ public class SpecialGridController : MonoBehaviour
 
         }
     }
+
+    void CheckForMoves(UnitParent unit)
+    {
+        if (unit.UnitType == UnitType.Rock)
+            return;
+        //if()
+    }
+
+    //void MoveState()
 }
