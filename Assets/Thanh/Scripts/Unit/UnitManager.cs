@@ -15,7 +15,7 @@ public class UnitManager : Singleton<UnitManager>
     Vector2Int selectedTileCord;
     Color originalColor;
 
-    public static event Action onEndMove;
+    public static event Action onEndSpecialMove;
 
     void Start()
     {
@@ -49,20 +49,21 @@ public class UnitManager : Singleton<UnitManager>
             Collider2D grid = Physics2D.OverlapPoint(gridCord, tileLayer);
             if(grid != null)
             {
-                UnitParent currentUnit = grid.GetComponentInChildren<UnitParent>();
-                if(currentUnit != null && currentUnit.UnitType != UnitType.House)
+                UnitParent unit = grid.GetComponentInChildren<UnitParent>();
+
+                if(unit != null && unit.UnitType != UnitType.House)
                     return;
 
                 if(!unitSelected)
                 {
                     //If there is an unit on the slot
-                    if(currentUnit != null)
-                        SelectState((UnitHouse)currentUnit, gridCord);
+                    if(unit != null)
+                        SelectState((UnitHouse)unit, gridCord);
                 }
                 else
                 {
                     //If the player select that slot again, then Deselect
-                    if(currentUnit != null && selectedUnit == currentUnit)
+                    if(unit != null && selectedUnit == unit)
                     {
                         DeselectState();
                         return;
@@ -72,19 +73,19 @@ public class UnitManager : Singleton<UnitManager>
                         return;
 
                     //If the slot is empty, then move the current unit to that slot
-                    if(currentUnit == null)
+                    if(unit == null)
                         MoveState(grid.transform);
                     else
                     {
                         UnitHouse tempUnit;
-                        if(currentUnit.UnitType == UnitType.Rock)
+                        if(unit.UnitType == UnitType.Rock)
                             return;
                         
-                        tempUnit = (UnitHouse)currentUnit;
+                        tempUnit = (UnitHouse)unit;
 
-                        if(selectedUnit.UnitType == currentUnit.UnitType && selectedUnit.HouseLevel == tempUnit.HouseLevel)
+                        if(selectedUnit.UnitType == unit.UnitType && selectedUnit.HouseLevel == tempUnit.HouseLevel)
                             MergeState(tempUnit);
-                        else if(selectedUnit.UnitType == currentUnit.UnitType && selectedUnit.HouseLevel != tempUnit.HouseLevel)
+                        else if(selectedUnit.UnitType == unit.UnitType && selectedUnit.HouseLevel != tempUnit.HouseLevel)
                             SwapState(tempUnit);
                     }
                 }
@@ -122,10 +123,14 @@ public class UnitManager : Singleton<UnitManager>
 
     void MoveState(Transform targetGrid)
     {
-        unitSelected = false;
         selectedUnit.transform.SetParent(targetGrid);
         selectedUnit.transform.localPosition = Vector3.zero;
         DeselectState();
+    }
+
+    public void SpecialMove(Transform targetGrid)
+    {
+        
     }
 
     void SwapState(UnitHouse unit)
