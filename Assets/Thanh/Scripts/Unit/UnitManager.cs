@@ -10,7 +10,6 @@ public class UnitManager : Singleton<UnitManager>
     [SerializeField] List<GameObject> housePrefabs;
     Vector2Int[,] tilesCords2DArray = new Vector2Int[5,5];
     UnitSlot[,] unitSlots = new UnitSlot[5,5];
-    int[,] special2DGridArray = new int[5,5];
 
     int maximumSpecialGridSpawn = 3;
     int count = 0;
@@ -49,9 +48,9 @@ public class UnitManager : Singleton<UnitManager>
         {
             int randomYIndex = UnityEngine.Random.Range(0, 4);
             int randomXIndex = UnityEngine.Random.Range(0, 4);
-            if (special2DGridArray[randomXIndex,randomYIndex] == 0)
+            if (!unitSlots[randomXIndex, randomYIndex].IsSpecialGrid)
             {
-                special2DGridArray[randomXIndex, randomYIndex] = 1;
+                unitSlots[randomXIndex, randomYIndex].IsSpecialGrid = true;
                 count++;
                 GameObject newUnit = Instantiate(specialGridPrefabs, unitSlots[randomXIndex, randomYIndex].transform.position, Quaternion.identity);
                 newUnit.transform.SetParent(unitSlots[randomXIndex, randomYIndex].transform);
