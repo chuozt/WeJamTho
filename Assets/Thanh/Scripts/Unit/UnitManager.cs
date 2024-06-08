@@ -225,7 +225,7 @@ public class UnitManager : Singleton<UnitManager>
     [SerializeField] GameObject specialGridPrefabs;
     int maximumSpecialGridSpawn = 3;
     int count = 0;
-    Vector2Int[] spawnedSpecialGrid;
+    List<Vector2Int> spawnedSpecialGrid = new List<Vector2Int>();
 
     UnitSlot selectedUnitSlot;
     bool unitSelected = false;
@@ -344,34 +344,71 @@ public class UnitManager : Singleton<UnitManager>
         return false;
     }
 
-    void CheckForSpecialMoves(Vector2Int cords)
+    void MoveSpecialGrid()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            //CheckForGrid();
+            CheckForSpecialMoves(Vector2Int.up);
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            CheckForSpecialMoves(Vector2Int.down);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            CheckForSpecialMoves(Vector2Int.left);
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-
+            CheckForSpecialMoves(Vector2Int.right);
         }
 
         onEndMove?.Invoke();
     }
-
-    void CheckForGrid(Unit unit)
+    void CheckForSpecialMoves(Vector2Int direction)
     {
-        if (unit.UnitType == UnitType.Rock)
-            return;
+        List<Vector2Int> newCords = new List<Vector2Int>();
+
+        foreach(Vector2Int position in spawnedSpecialGrid)
+        {
+            Vector2Int cords = position + direction;
+
+            if (IsMoveable(cords))
+            {
+                newCords.Add(cords);
+            }
+            else
+                return;
+        }
+
+        for(int i = 0; i < spawnedSpecialGrid.Count; i++)
+        {
+            Vector2Int oldPosition = spawnedSpecialGrid[i];
+            Vector2Int newPosition = newCords[i];
+
+            spawnedSpecialGrid[i] = newPosition;
+        }
     }
+
+    bool IsMoveable(Vector2Int position)
+    {
+        Unit unit = ;
+        if (position.x >= 0 && position.x < unitSlots.Length && position.y >= 0 && position.y < unitSlots.Length)
+        {
+            if(unit.UnitType == UnitType.Rock)
+                return unitSlots[position.x, position.y] != unit;
+        }
+        return false;
+    }
+
+    //void CheckForGrid(Unit unit)
+    //{
+    //    if (unit.UnitType == UnitType.Rock)
+    //        return;
+    //}
 
     void SelectState(UnitSlot unitSlot, Vector2Int gridCord)
     {
