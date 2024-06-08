@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
-
 public class UnitManager : Singleton<UnitManager>
 {
     [SerializeField] Labelller[] tilesCords;
     [SerializeField] LayerMask tileLayer;
     [SerializeField] List<GameObject> housePrefabs;
     Vector2Int[,] tilesCords2DArray = new Vector2Int[5,5];
+    UnitSlot[,] unitSlots = new UnitSlot[5,5];
     int[,] special2DGridArray = new int[5,5];
 
     int maximumSpecialGridSpawn = 3;
     int count = 0;
-    List<Vector2Int> availablePoints = new List<Vector2Int>();
     [SerializeField] GameObject specialGridPrefabs;
 
     UnitHouse selectedUnit;
@@ -36,12 +34,11 @@ public class UnitManager : Singleton<UnitManager>
         int currentIndex = 0;
         for(int i = 0; i < 5; i++)
         {
-            
             for (int j = 0; j < 5; j++)
             {
                 tilesCords2DArray[i,j] = tilesCords[currentIndex].Cords;
+                unitSlots[i,j] = tilesCords[currentIndex].GetComponent<UnitSlot>();
                 currentIndex++;
-                availablePoints.Add(new Vector2Int(i,j));
             }
         }
     }
@@ -54,7 +51,9 @@ public class UnitManager : Singleton<UnitManager>
         {
             special2DGridArray[randomXIndex, randomYIndex] = 1;
             count++;
-            //GameObject newUnit = Instantiate(specialGridPrefabs, tilesCords2DArray[randomXIndex, randomYIndex], Quaternion.identity);
+            GameObject newUnit = Instantiate(specialGridPrefabs, unitSlots[randomXIndex, randomYIndex].transform.position, Quaternion.identity);
+            newUnit.transform.SetParent(unitSlots[randomXIndex, randomYIndex].transform);
+            newUnit.transform.localPosition = Vector3.zero;
         }
 
         //GameObject newUnit = Instantiate(specialGridPrefabs, new Vector3(randomPosition.x, randomPosition.y, 0), Quaternion.identity);

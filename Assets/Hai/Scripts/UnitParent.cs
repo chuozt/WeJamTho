@@ -6,7 +6,7 @@ using UnityEditor;
 public class UnitParent : MonoBehaviour
 {
     private Animator anim;
-    [SerializeField] protected UnitType unitType;
+    protected UnitType unitType;
     public UnitType UnitType => unitType;
 
     public virtual void Awake()
@@ -17,6 +17,11 @@ public class UnitParent : MonoBehaviour
     protected void OnUnitDestroy()
     {
         anim.SetTrigger("Disappear");
+    }
+
+    protected Vector2Int GetGridCoordinates()
+    {
+        return GetComponentInParent<Labelller>().Cords;
     }
 }
 
