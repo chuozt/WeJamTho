@@ -215,29 +215,31 @@ using System;
 //     }
 // }
 
-public class UnitManager : MonoBehaviour
+public class UnitManager : Singleton<UnitManager>
 {
     [SerializeField] Labelller[] tilesCords;
     [SerializeField] LayerMask tileLayer;
     [SerializeField] List<GameObject> housePrefabs;
-    UnitSlot[,] unitSlots = new UnitSlot[5, 5];
+    [SerializeField] UnitSlot[,] unitSlots = new UnitSlot[5, 5];
 
     [SerializeField] GameObject specialGridPrefabs;
     int maximumSpecialGridSpawn = 3;
     int count = 0;
+    Vector2Int[] spawnedSpecialGrid;
 
     UnitSlot selectedUnitSlot;
     bool unitSelected = false;
     Vector2Int selectedTileCord;
     Color originalColor;
 
-    public static event Action onEndSpecialMove;
+    public static event Action onEndMove;
 
     void Start()
     {
         SaveTilesCordsIn2DArray();
         InitSpecialGrid();
         selectedUnitSlot = null;
+        //spawnedSpecialGrid = new Vector2Int[];
     }
 
     void SaveTilesCordsIn2DArray()
@@ -266,11 +268,15 @@ public class UnitManager : MonoBehaviour
                 GameObject newUnit = Instantiate(specialGridPrefabs, unitSlots[randomXIndex, randomYIndex].transform.position, Quaternion.identity);
                 newUnit.transform.SetParent(unitSlots[randomXIndex, randomYIndex].transform);
                 newUnit.transform.localPosition = Vector3.zero;
+                Debug.Log(unitSlots[randomXIndex, randomYIndex]);
+                
             }
             else
                 continue;
         }
     }
+
+    
 
     private void Update()
     {
@@ -336,6 +342,38 @@ public class UnitManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    void CheckForSpecialMoves(Vector2Int cords)
+    {
+        
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            //CheckForGrid();
+            onEndMove?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            onEndMove?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            onEndMove?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            onEndMove?.Invoke();
+        }
+    }
+
+    void CheckForGrid(Unit unit)
+    {
+        if (unit.UnitType == UnitType.Rock)
+            return;
     }
 
     void SelectState(UnitSlot unitSlot, Vector2Int gridCord)
