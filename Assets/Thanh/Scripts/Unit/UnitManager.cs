@@ -45,15 +45,20 @@ public class UnitManager : Singleton<UnitManager>
 
     void InitSpecialGrid()
     {
-        int randomYIndex = UnityEngine.Random.Range(0, 4);
-        int randomXIndex = UnityEngine.Random.Range(0, 4);
-        if (special2DGridArray[randomXIndex,randomYIndex] == 0)
+        while(count < maximumSpecialGridSpawn)
         {
-            special2DGridArray[randomXIndex, randomYIndex] = 1;
-            count++;
-            GameObject newUnit = Instantiate(specialGridPrefabs, unitSlots[randomXIndex, randomYIndex].transform.position, Quaternion.identity);
-            newUnit.transform.SetParent(unitSlots[randomXIndex, randomYIndex].transform);
-            newUnit.transform.localPosition = Vector3.zero;
+            int randomYIndex = UnityEngine.Random.Range(0, 4);
+            int randomXIndex = UnityEngine.Random.Range(0, 4);
+            if (special2DGridArray[randomXIndex,randomYIndex] == 0)
+            {
+                special2DGridArray[randomXIndex, randomYIndex] = 1;
+                count++;
+                GameObject newUnit = Instantiate(specialGridPrefabs, unitSlots[randomXIndex, randomYIndex].transform.position, Quaternion.identity);
+                newUnit.transform.SetParent(unitSlots[randomXIndex, randomYIndex].transform);
+                newUnit.transform.localPosition = Vector3.zero;
+            }
+            else
+                continue;
         }
 
         //GameObject newUnit = Instantiate(specialGridPrefabs, new Vector3(randomPosition.x, randomPosition.y, 0), Quaternion.identity);
