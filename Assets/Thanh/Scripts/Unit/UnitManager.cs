@@ -363,6 +363,9 @@ public class UnitManager : Singleton<UnitManager>
                         Unit checkUnit = unitSlots[specialCoords[i].x - 1, specialCoords[i].y].Unit;
                         UnitHazard checkHazard = unitSlots[specialCoords[i].x - 1, specialCoords[i].y].UnitHazard;
 
+                        if(checkUnit != null && checkUnit.UnitType == UnitType.Rock)
+                            continue;
+
                         if(checkUnit == null)
                             MoveState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x - 1, specialCoords[i].y]);
                         else if(checkUnit != null && checkHazard == null && ((UnitHouse)checkUnit).HouseLevel == ((UnitHouse)unitSlots[specialCoords[i].x, specialCoords[i].y].Unit).HouseLevel)
@@ -382,6 +385,9 @@ public class UnitManager : Singleton<UnitManager>
                     {
                         Unit checkUnit = unitSlots[specialCoords[i].x, specialCoords[i].y - 1].Unit;
                         UnitHazard checkHazard = unitSlots[specialCoords[i].x, specialCoords[i].y - 1].UnitHazard;
+                        
+                        if(checkUnit != null && checkUnit.UnitType == UnitType.Rock)
+                            continue;
 
                         if(checkUnit == null)
                             MoveState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x, specialCoords[i].y - 1]);
@@ -403,6 +409,9 @@ public class UnitManager : Singleton<UnitManager>
                         Unit checkUnit = unitSlots[specialCoords[i].x + 1, specialCoords[i].y].Unit;
                         UnitHazard checkHazard = unitSlots[specialCoords[i].x + 1, specialCoords[i].y].UnitHazard;
 
+                        if(checkUnit != null && checkUnit.UnitType == UnitType.Rock)
+                            continue;
+
                         if(checkUnit == null)
                             MoveState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x + 1, specialCoords[i].y]);
                         else if(checkUnit != null && checkHazard == null && ((UnitHouse)checkUnit).HouseLevel == ((UnitHouse)unitSlots[specialCoords[i].x, specialCoords[i].y].Unit).HouseLevel)
@@ -422,6 +431,9 @@ public class UnitManager : Singleton<UnitManager>
                     {
                         Unit checkUnit = unitSlots[specialCoords[i].x, specialCoords[i].y + 1].Unit;
                         UnitHazard checkHazard = unitSlots[specialCoords[i].x, specialCoords[i].y + 1].UnitHazard;
+
+                        if(checkUnit != null && checkUnit.UnitType == UnitType.Rock)
+                            continue;
 
                         if(checkUnit == null)
                             MoveState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x, specialCoords[i].y + 1]);
