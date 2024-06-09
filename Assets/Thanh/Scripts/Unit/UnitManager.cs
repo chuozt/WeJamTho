@@ -635,4 +635,9 @@ public class UnitManager : Singleton<UnitManager>
 
         return new Vector2Int(x, y);
     }
+
+    void AddScore()
+    {
+        scoreText.text = (int.Parse(scoreText.text) + UnitManager.Instance.UpdateScore()).ToString();
+    }
 }
