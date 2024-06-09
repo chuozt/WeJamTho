@@ -311,6 +311,9 @@ public class UnitManager : Singleton<UnitManager>
 
     private void Update()
     {
+        if(PauseMenuManager.Instance.isPausing)
+            return;
+            
         if (Input.GetMouseButtonDown(0)) // Left mouse button
         {
             // Convert mouse position to world position
@@ -634,10 +637,5 @@ public class UnitManager : Singleton<UnitManager>
         int y = Mathf.FloorToInt(worldPosition.y / GridManager.Instance.UnityGridSize);
 
         return new Vector2Int(x, y);
-    }
-
-    void AddScore()
-    {
-        scoreText.text = (int.Parse(scoreText.text) + UnitManager.Instance.UpdateScore()).ToString();
     }
 }

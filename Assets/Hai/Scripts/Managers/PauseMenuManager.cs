@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseMenuManager : MonoBehaviour
+public class PauseMenuManager : Singleton<PauseMenuManager>
 {
     [SerializeField] private GameObject pauseMenuPanel;
     [SerializeField] private GameObject audioSettingsPanel;
-    bool isPausing = false;
+    public bool isPausing = false;
 
     void Awake()
     {
