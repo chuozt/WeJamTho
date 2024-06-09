@@ -6,8 +6,10 @@ public class UnitHouse : Unit
 {
     [SerializeField] HouseLevel houseLevel;
     bool isLevelMax = false;
+    Vector2Int position;
     public HouseLevel HouseLevel => houseLevel;
     public bool IsLevelMax => isLevelMax;
+    public Vector2Int Position => position;
 
     public override void Awake()
     {
