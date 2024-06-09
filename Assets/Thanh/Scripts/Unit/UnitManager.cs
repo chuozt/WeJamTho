@@ -281,6 +281,7 @@ public class UnitManager : Singleton<UnitManager>
 
     private void Update()
     {
+        MoveSpecialGrid();
         if (Input.GetMouseButtonDown(0)) // Left mouse button
         {
             // Convert mouse position to world position
