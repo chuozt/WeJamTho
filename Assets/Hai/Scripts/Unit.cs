@@ -29,7 +29,8 @@ public enum UnitType
 {
     House,
     Hazard,
-    Rock
+    Rock,
+    MainHouse
 }
 
 public enum HouseLevel

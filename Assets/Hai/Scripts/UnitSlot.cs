@@ -133,7 +133,7 @@ public class UnitSlot : MonoBehaviour
             return;
 
         UnitSlot slot = UnitManager.Instance.GetUnitSlot(position);
-        if (slot.Unit is UnitHouse house && !connectedHouses.Contains(house))
+        if (slot.Unit is UnitHouse house && !connectedHouses.Contains(house) && slot.Unit.UnitType != UnitType.MainHouse)
         {
             connectedHouses.Add(house);
 
@@ -157,7 +157,7 @@ public class UnitSlot : MonoBehaviour
         Vector2Int position = house.GetComponentInParent<UnitSlot>().slotCoordinates;
         UnitSlot houseSlot = UnitManager.Instance.GetUnitSlot(new Vector2Int(position.y, position.x));
         
-        if (house.HouseLevel > 0)
+        if (house.HouseLevel > 0 && house.HouseLevel != HouseLevel.Main)
         {
             house.HouseLevel--;
             int newIndex = (int)house.HouseLevel;
@@ -172,7 +172,7 @@ public class UnitSlot : MonoBehaviour
 
             Destroy(house.gameObject);
         }
-        else
+        else if(house.HouseLevel != HouseLevel.Main)
         {
             Destroy(house.gameObject);
         }
