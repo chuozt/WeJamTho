@@ -49,7 +49,7 @@ public class UnitHazard : Unit
         if(movesLeft > 1)
             movesLeft--;
         else
-            Destroy(gameObject, 0.2f);
+            Destroy(gameObject, 0.25f);
         
         onHazardUpdated?.Invoke();
     }

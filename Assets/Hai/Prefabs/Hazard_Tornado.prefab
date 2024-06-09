@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 853102303, guid: 1bbc12b1ef20ec24ca47088afe5ae0c6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.8666667}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.94509804}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -122,6 +122,6 @@ MonoBehaviour:
   unitType: 1
   hazardType: 1
   preSpawnMovesLeft: 1
-  movesLeft: 3
+  movesLeft: 2
   isGhostMode: 1
   initialDirection: {x: 0, y: 1}

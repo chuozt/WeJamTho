@@ -55,9 +55,11 @@ public class UnitSlot : MonoBehaviour
     {
         if (unit is UnitHouse)
         {
-            Destroy(unit.gameObject);
-            Destroy(unitHazard.gameObject);
-            unit = null;
+            GameObject rock = Instantiate(UnitSpawnerManager.Instance.rockPrefab, transform.position, Quaternion.identity);
+            rock.transform.SetParent(this.transform);
+            unit = rock.GetComponent<Unit>();
+
+            Destroy(unitHazard.gameObject, 0.25f);
             unitHazard = null;
         }
     }
@@ -68,9 +70,12 @@ public class UnitSlot : MonoBehaviour
         {
             if (unit is UnitHouse)
             {
+                // GameObject rock = Instantiate(UnitSpawnerManager.Instance.rockPrefab, transform.position, Quaternion.identity);
+                // rock.transform.SetParent(this.transform);
+                // unit = rock.GetComponent<Unit>();
                 Destroy(unit.gameObject);
-                Destroy(unitHazard.gameObject);
                 unit = null;
+                Destroy(unitHazard.gameObject);
                 unitHazard = null;
                 return;
             }
@@ -85,8 +90,12 @@ public class UnitSlot : MonoBehaviour
             UnitSlot nextSlot = UnitManager.Instance.GetUnitSlot(nextGridPosition);
             if (nextSlot.Unit is UnitHouse)
             {
-                Destroy(nextSlot.Unit.gameObject);
-                nextSlot.Unit = null;
+                // GameObject rock = Instantiate(UnitSpawnerManager.Instance.rockPrefab, transform.position, Quaternion.identity);
+                // rock.transform.SetParent(this.transform);
+                // unit = rock.GetComponent<Unit>();
+
+                Destroy(unit.gameObject);
+                unit = null;
                 Destroy(unitHazard.gameObject);
                 unitHazard = null;
                 return;

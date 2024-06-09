@@ -8,6 +8,7 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
     [SerializeField] public GameObject firePrefab;
     [SerializeField] public GameObject tornadoPrefab;
     [SerializeField] public GameObject lightningPrefab;
+    [SerializeField] public GameObject rockPrefab;
     [SerializeField] private int numberOfTurnsBeforeHazards = 5;
 
     private int turnCount = 0;
@@ -67,12 +68,6 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
     {
         if(turnCount < numberOfTurnsBeforeHazards)
             return;
-        
-        if(turnCount % 3 != 0)
-        {
-            IncreaseHazardDifficulty();
-            return;
-        }
 
         float chance = Random.value;
         float total = fireRate + tornadoRate + lightningRate;
@@ -140,14 +135,14 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
     private void IncreaseHazardDifficulty()
     {
         Debug.Log("Turn: " + turnCount);
-        if(turnCount % 3 == 0)
+        if(turnCount % 3 == 0 || turnCount % 4 == 0 || turnCount % 5 == 0)
         {
-            hazardSpawnChance += 0.09f;
+            hazardSpawnChance += 0.08f;
             hazardSpawnChance *= 0.9f;
             Debug.Log(hazardSpawnChance);
         }
-        fireRate -= 0.01f;
-        tornadoRate += 0.005f;
-        lightningRate += 0.01f;
+        fireRate -= 0.001f;
+        tornadoRate += 0.0005f;
+        lightningRate += 0.005f;
     }
 }

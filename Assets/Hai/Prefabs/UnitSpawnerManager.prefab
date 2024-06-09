@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &885696638441839646
 MonoBehaviour:
@@ -50,4 +50,5 @@ MonoBehaviour:
   firePrefab: {fileID: 3015979796097332681, guid: bb99c38644e360b42889e6acc5717d54, type: 3}
   tornadoPrefab: {fileID: 3015979796097332681, guid: 1e43850319b86ba4c8f360fe4914be56, type: 3}
   lightningPrefab: {fileID: 3015979796097332681, guid: 25aa3b52de006114e80dbf021255991c, type: 3}
+  rockPrefab: {fileID: 689061555087137688, guid: aaa5a2f84c0a5194ca8c1d1b92281f91, type: 3}
   numberOfTurnsBeforeHazards: 5

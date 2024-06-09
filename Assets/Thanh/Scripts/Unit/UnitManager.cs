@@ -244,34 +244,36 @@ public class UnitManager : Singleton<UnitManager>
         //spawnedSpecialGrid = new Vector2Int[];
     }
 
-    public void UpdateScore()
+    public int UpdateScore()
     {
+        int total = 0;
+
         for(int i = 0; i < 5 ; i++)
         {
             for (int j = 0; j < 5 ; j++)
             {
                 if (unitSlots[i,j].Unit != null && unitSlots[i,j].Unit.UnitType == UnitType.House)
                 {
-                    //switch ((UnitHouse)unitSlots[i,j].Unit).HouseLevel)
-                    //{
-                    //    case HouseLevel.Lv1:
-                    //        Debug.Log(1);
-                    //        return 1;
-                    //    case HouseLevel.Lv2:
-                    //        Debug.Log(5);
-                    //        return 5;
-                    //    case HouseLevel.Lv3:
-                    //        Debug.Log(10);
-                    //        return 10;
-                    //    case HouseLevel.Lv4:
-                    //        Debug.Log(25);
-                    //        return 25;
-                    //    default:
-                    //        return 0;
-                    //}
+                    switch(((UnitHouse)unitSlots[i,j].Unit).HouseLevel)
+                    {
+                        case HouseLevel.Lv1:
+                            total += 1;
+                            break;
+                        case HouseLevel.Lv2:
+                            total += 5;
+                            break;
+                        case HouseLevel.Lv3:
+                            total += 11;
+                            break;
+                        case HouseLevel.Lv4:
+                            total += 25;
+                            break;
+                    }
                 }
             }
         }
+
+        return total;
     }
 
     void SaveTilesCordsIn2DArray()
@@ -538,8 +540,8 @@ public class UnitManager : Singleton<UnitManager>
         targetSlot.Unit = selectedSlot.Unit;
         selectedSlot.Unit = null;
         targetSlot.Unit.transform.SetParent(targetSlot.transform);
-        GraduallyMoveLocal(targetSlot.Unit.transform);
-        //targetSlot.Unit.transform.localPosition = Vector3.zero;
+        //GraduallyMoveLocal(targetSlot.Unit.transform);
+        targetSlot.Unit.transform.localPosition = Vector3.zero;
         selectedUnitSlot = targetSlot;
 
         if(unitSelected)
