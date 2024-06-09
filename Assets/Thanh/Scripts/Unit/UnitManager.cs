@@ -223,9 +223,10 @@ public class UnitManager : Singleton<UnitManager>
     public UnitSlot[,] unitSlots = new UnitSlot[5, 5];
 
     [SerializeField] GameObject specialGridPrefabs;
-    int maximumSpecialGridSpawn = 3;
+    int maximumSpecialGridSpawn = 4;
     int count = 0;
-    Vector2Int[] spawnedSpecialGrid;
+    [SerializeField] Vector2Int[] specialCoords;
+    //List<Vector2Int> spawnedSpecialGrid = new List<Vector2Int>();
 
     UnitSlot selectedUnitSlot;
     bool unitSelected = false;
@@ -236,6 +237,7 @@ public class UnitManager : Singleton<UnitManager>
 
     void Start()
     {
+        specialCoords = new Vector2Int[maximumSpecialGridSpawn];
         SaveTilesCordsIn2DArray();
         InitSpecialGrid();
         selectedUnitSlot = null;
@@ -264,19 +266,16 @@ public class UnitManager : Singleton<UnitManager>
             if (!unitSlots[randomXIndex, randomYIndex].IsSpecialGrid)
             {
                 unitSlots[randomXIndex, randomYIndex].IsSpecialGrid = true;
-                count++;
                 GameObject newUnit = Instantiate(specialGridPrefabs, unitSlots[randomXIndex, randomYIndex].transform.position, Quaternion.identity);
                 newUnit.transform.SetParent(unitSlots[randomXIndex, randomYIndex].transform);
                 newUnit.transform.localPosition = Vector3.zero;
-                Debug.Log(unitSlots[randomXIndex, randomYIndex]);
-                
+                specialCoords[count] = new Vector2Int(randomXIndex, randomYIndex);
+                count++;
             }
             else
                 continue;
         }
     }
-
-    
 
     private void Update()
     {
@@ -318,14 +317,14 @@ public class UnitManager : Singleton<UnitManager>
 
                 // If the slot is empty, then move the current unit to that slot
                 if (unit == null)
-                    MoveState(slot);
+                    MoveState(selectedUnitSlot, slot);
                 else
                 {
                     if (unit.UnitType == UnitType.Rock)
                         return;
 
                     if (selectedUnitSlot.Unit.UnitType == unit.UnitType && ((UnitHouse)selectedUnitSlot.Unit).HouseLevel == ((UnitHouse)slot.Unit).HouseLevel)
-                        MergeState(slot);
+                        MergeState(selectedUnitSlot, slot);
                     else if (selectedUnitSlot.Unit.UnitType == unit.UnitType && ((UnitHouse)selectedUnitSlot.Unit).HouseLevel != ((UnitHouse)slot.Unit).HouseLevel)
                         SwapState(selectedUnitSlot, slot);
                 }
@@ -344,34 +343,174 @@ public class UnitManager : Singleton<UnitManager>
         return false;
     }
 
-    void CheckForSpecialMoves(Vector2Int cords)
+    public void MoveSpecialGrid(int dir)
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if(unitSelected)
+            DeselectState();
+
+        switch(dir)
         {
-            //CheckForGrid();
+            //Left
+            case 0:
+                Array.Sort(specialCoords, CompareByX);
+
+                for(int i = 0; i < specialCoords.Length; i++)
+                {
+                    if(unitSlots[specialCoords[i].x, specialCoords[i].y].Unit == null || unitSlots[specialCoords[i].x, specialCoords[i].y].Unit.UnitType == UnitType.Rock)
+                        continue;
+                    if(CheckOutOfBounds(specialCoords[i].x, 1, specialCoords[i].y, 0))
+                    {
+                        Unit checkUnit = unitSlots[specialCoords[i].x - 1, specialCoords[i].y].Unit;
+                        UnitHazard checkHazard = unitSlots[specialCoords[i].x - 1, specialCoords[i].y].UnitHazard;
+
+                        if(checkUnit != null && checkUnit.UnitType == UnitType.Rock)
+                            continue;
+
+                        if(checkUnit == null)
+                            MoveState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x - 1, specialCoords[i].y]);
+                        else if(checkUnit != null && checkHazard == null && ((UnitHouse)checkUnit).HouseLevel == ((UnitHouse)unitSlots[specialCoords[i].x, specialCoords[i].y].Unit).HouseLevel)
+                            MergeState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x - 1, specialCoords[i].y]);
+                    }
+                }
+                break;
+            //Up
+            case 1:
+                Array.Sort(specialCoords, CompareByY);
+
+                for(int i = 0; i < specialCoords.Length; i++)
+                {    
+                    if(unitSlots[specialCoords[i].x, specialCoords[i].y].Unit == null || unitSlots[specialCoords[i].x, specialCoords[i].y].Unit.UnitType == UnitType.Rock)
+                        continue;
+                    if(CheckOutOfBounds(specialCoords[i].x, 0, specialCoords[i].y, 1))
+                    {
+                        Unit checkUnit = unitSlots[specialCoords[i].x, specialCoords[i].y - 1].Unit;
+                        UnitHazard checkHazard = unitSlots[specialCoords[i].x, specialCoords[i].y - 1].UnitHazard;
+                        
+                        if(checkUnit != null && checkUnit.UnitType == UnitType.Rock)
+                            continue;
+
+                        if(checkUnit == null)
+                            MoveState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x, specialCoords[i].y - 1]);
+                        else if(checkUnit != null && checkHazard == null && ((UnitHouse)checkUnit).HouseLevel == ((UnitHouse)unitSlots[specialCoords[i].x, specialCoords[i].y].Unit).HouseLevel)
+                            MergeState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x, specialCoords[i].y - 1]);
+                    }
+                }
+                break;
+            //Right
+            case 2:
+                Array.Sort(specialCoords, CompareByXDescending);
+
+                for(int i = 0; i < specialCoords.Length; i++)
+                {
+                    if(unitSlots[specialCoords[i].x, specialCoords[i].y].Unit == null || unitSlots[specialCoords[i].x, specialCoords[i].y].Unit.UnitType == UnitType.Rock)
+                        continue;
+                    if(CheckOutOfBounds(specialCoords[i].x, -1, specialCoords[i].y, 0))
+                    {
+                        Unit checkUnit = unitSlots[specialCoords[i].x + 1, specialCoords[i].y].Unit;
+                        UnitHazard checkHazard = unitSlots[specialCoords[i].x + 1, specialCoords[i].y].UnitHazard;
+
+                        if(checkUnit != null && checkUnit.UnitType == UnitType.Rock)
+                            continue;
+
+                        if(checkUnit == null)
+                            MoveState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x + 1, specialCoords[i].y]);
+                        else if(checkUnit != null && checkHazard == null && ((UnitHouse)checkUnit).HouseLevel == ((UnitHouse)unitSlots[specialCoords[i].x, specialCoords[i].y].Unit).HouseLevel)
+                            MergeState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x + 1, specialCoords[i].y]);
+                    }
+                }
+                break;
+            //Down
+            case 3:
+                Array.Sort(specialCoords, CompareByYDescending);
+
+                for(int i = 0; i < specialCoords.Length; i++)
+                {
+                    if(unitSlots[specialCoords[i].x, specialCoords[i].y].Unit == null || unitSlots[specialCoords[i].x, specialCoords[i].y].Unit.UnitType == UnitType.Rock)
+                        continue;
+                    if(CheckOutOfBounds(specialCoords[i].x, 0, specialCoords[i].y, -1))
+                    {
+                        Unit checkUnit = unitSlots[specialCoords[i].x, specialCoords[i].y + 1].Unit;
+                        UnitHazard checkHazard = unitSlots[specialCoords[i].x, specialCoords[i].y + 1].UnitHazard;
+
+                        if(checkUnit != null && checkUnit.UnitType == UnitType.Rock)
+                            continue;
+
+                        if(checkUnit == null)
+                            MoveState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x, specialCoords[i].y + 1]);
+                        else if(checkUnit != null && checkHazard == null && ((UnitHouse)checkUnit).HouseLevel == ((UnitHouse)unitSlots[specialCoords[i].x, specialCoords[i].y].Unit).HouseLevel)
+                            MergeState(unitSlots[specialCoords[i].x, specialCoords[i].y], unitSlots[specialCoords[i].x, specialCoords[i].y + 1]);
+                    }
+                }
+                break;
         }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-
-        }
-
-        onEndMove?.Invoke();
     }
 
-    void CheckForGrid(Unit unit)
+    int CompareByX(Vector2Int a, Vector2Int b)
     {
-        if (unit.UnitType == UnitType.Rock)
-            return;
+        return a.x.CompareTo(b.x);
     }
+
+    int CompareByY(Vector2Int a, Vector2Int b)
+    {
+        return a.y.CompareTo(b.y);
+    }
+
+    int CompareByXDescending(Vector2Int a, Vector2Int b)
+    {
+        return b.x.CompareTo(a.x);
+    }
+
+    int CompareByYDescending(Vector2Int a, Vector2Int b)
+    {
+        return b.y.CompareTo(a.y);
+    }
+
+    bool CheckOutOfBounds(int index1, int subtract1, int index2, int subtract2)
+    {
+        return ((index1 - subtract1 >= 0 && index1 - subtract1 < 5) && (index2 - subtract2 >= 0 && index2 - subtract2 < 5));
+    }
+
+    void CheckForSpecialMoves()//Vector2Int direction)
+    {
+        //List<Vector2Int> newCords = new List<Vector2Int>();
+
+        //foreach(Vector2Int position in spawnedSpecialGrid)
+        //{
+        //    Vector2Int cords = position + direction;
+
+        //    if (IsMoveable(cords))
+        //    {
+        //        newCords.Add(cords);
+        //    }
+        //    else
+        //        return;
+        //}
+
+        //for(int i = 0; i < spawnedSpecialGrid.Count; i++)
+        //{
+        //    Vector2Int oldPosition = spawnedSpecialGrid[i];
+        //    Vector2Int newPosition = newCords[i];
+
+        //    spawnedSpecialGrid[i] = newPosition;
+        //}
+    }
+
+    //bool IsMoveable(Vector2Int position)
+    //{
+    //    Unit unit = ;
+    //    if (position.x >= 0 && position.x < unitSlots.Length && position.y >= 0 && position.y < unitSlots.Length)
+    //    {
+    //        if(unit.UnitType == UnitType.Rock)
+    //            return unitSlots[position.x, position.y] != unit;
+    //    }
+    //    return false;
+    //}
+
+    //void CheckForGrid(Unit unit)
+    //{
+    //    if (unit.UnitType == UnitType.Rock)
+    //        return;
+    //}
 
     void SelectState(UnitSlot unitSlot, Vector2Int gridCord)
     {
@@ -380,7 +519,6 @@ public class UnitManager : Singleton<UnitManager>
         selectedTileCord = gridCord;
         originalColor = selectedUnitSlot.Unit.gameObject.GetComponent<SpriteRenderer>().color;
         selectedUnitSlot.Unit.GetComponent<SpriteRenderer>().color = Color.green;
-        Debug.Log("Selecting");
     }
 
     void DeselectState()
@@ -391,19 +529,19 @@ public class UnitManager : Singleton<UnitManager>
         selectedUnitSlot = null;
         unitSelected = false;
         selectedTileCord = Vector2Int.zero;
-        Debug.Log("Deselected");
     }
 
-    void MoveState(UnitSlot targetSlot)
+    void MoveState(UnitSlot selectedSlot, UnitSlot targetSlot)
     {
-        targetSlot.Unit = selectedUnitSlot.Unit;
-        selectedUnitSlot.Unit = null;
+        targetSlot.Unit = selectedSlot.Unit;
+        selectedSlot.Unit = null;
         targetSlot.Unit.transform.SetParent(targetSlot.transform);
         GraduallyMoveLocal(targetSlot.Unit.transform);
         //targetSlot.Unit.transform.localPosition = Vector3.zero;
         selectedUnitSlot = targetSlot;
 
-        DeselectState();
+        if(unitSelected)
+            DeselectState();
         onEndMove?.Invoke();
     }
 
@@ -433,23 +571,26 @@ public class UnitManager : Singleton<UnitManager>
 
         selectedUnitSlot = null;
 
-        DeselectState();
+        if(unitSelected)
+            DeselectState();
         onEndMove?.Invoke();
     }
 
-    void MergeState(UnitSlot slot)
+    void MergeState(UnitSlot slot1, UnitSlot slot2)
     {
-        int index = (int)((UnitHouse)slot.Unit).HouseLevel + 1;
+        int index = (int)((UnitHouse)slot2.Unit).HouseLevel + 1;
         if (index >= housePrefabs.Count)
             return;
 
         GameObject newUnit = Instantiate(housePrefabs[index], Vector3.zero, Quaternion.identity);
-        newUnit.transform.SetParent(slot.Unit.transform.parent);
+        newUnit.transform.SetParent(slot2.Unit.transform.parent);
         newUnit.transform.localPosition = Vector3.zero;
-        Destroy(selectedUnitSlot.Unit.gameObject);
-        Destroy(slot.Unit.gameObject);
-        slot.Unit = newUnit.GetComponent<Unit>();
-        DeselectState();
+        Destroy(slot1.Unit.gameObject);
+        Destroy(slot2.Unit.gameObject);
+        slot2.Unit = newUnit.GetComponent<Unit>();
+
+        if(unitSelected)
+            DeselectState();
         onEndMove?.Invoke();
     }
 
