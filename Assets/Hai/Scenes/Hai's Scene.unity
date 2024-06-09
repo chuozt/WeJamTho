@@ -1202,7 +1202,6 @@ MonoBehaviour:
   housePrefabs:
   - {fileID: 3015979796097332681, guid: 8ceedfa6ee071d44a812d4c930b12294, type: 3}
   - {fileID: 7977551561725383719, guid: 5da4faf388e4381458e1f7a31b5edc93, type: 3}
-  - {fileID: 7977551561725383719, guid: 74c3f14ba1dbb954695964ebee9ee1fa, type: 3}
   firePrefab: {fileID: 3015979796097332681, guid: bb99c38644e360b42889e6acc5717d54, type: 3}
   tornadoPrefab: {fileID: 3015979796097332681, guid: 1e43850319b86ba4c8f360fe4914be56, type: 3}
   lightningPrefab: {fileID: 3015979796097332681, guid: 25aa3b52de006114e80dbf021255991c, type: 3}
@@ -1927,7 +1926,7 @@ MonoBehaviour:
   - {fileID: 7977551561725383719, guid: 5da4faf388e4381458e1f7a31b5edc93, type: 3}
   - {fileID: 7977551561725383719, guid: 74c3f14ba1dbb954695964ebee9ee1fa, type: 3}
   - {fileID: 7977551561725383719, guid: a3231fe8f68e6f34bad8744443c681a2, type: 3}
-  specialGridPrefabs: {fileID: 0}
+  specialGridPrefabs: {fileID: 4256591530987516065, guid: 72a28773027a0a64e93aff59c8e6929f, type: 3}
 --- !u!4 &1189411962
 Transform:
   m_ObjectHideFlags: 0

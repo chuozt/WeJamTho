@@ -12,9 +12,9 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
 
     private int turnCount = 0;
     private float hazardSpawnChance = 0.2f;
-    private float fireRate = 0.4f;
+    private float fireRate = 0.45f;
     private float tornadoRate = 0.35f;
-    private float lightningRate = 0.25f;
+    private float lightningRate = 0.2f;
     private UnitSlot[,] unitSlots;
 
     void OnEnable()
@@ -66,6 +66,12 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
     {
         if(turnCount < numberOfTurnsBeforeHazards)
             return;
+        
+        if(turnCount % 3 != 0)
+        {
+            IncreaseHazardDifficulty();
+            return;
+        }
 
         float chance = Random.value;
         float total = fireRate + tornadoRate + lightningRate;
@@ -135,12 +141,12 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
         Debug.Log("Turn: " + turnCount);
         if(turnCount % 3 == 0)
         {
-            hazardSpawnChance += 0.085f;
+            hazardSpawnChance += 0.09f;
             hazardSpawnChance *= 0.9f;
             Debug.Log(hazardSpawnChance);
         }
         fireRate -= 0.01f;
-        tornadoRate += 0.02f;
-        lightningRate += 0.05f;
+        tornadoRate += 0.005f;
+        lightningRate += 0.01f;
     }
 }
