@@ -225,7 +225,8 @@ public class UnitManager : Singleton<UnitManager>
     [SerializeField] GameObject specialGridPrefabs;
     int maximumSpecialGridSpawn = 3;
     int count = 0;
-    List<Vector2Int> spawnedSpecialGrid = new List<Vector2Int>();
+    [SerializeField] GameObject[] specialUnits = new GameObject[3];
+    //List<Vector2Int> spawnedSpecialGrid = new List<Vector2Int>();
 
     UnitSlot selectedUnitSlot;
     bool unitSelected = false;
@@ -264,12 +265,12 @@ public class UnitManager : Singleton<UnitManager>
             if (!unitSlots[randomXIndex, randomYIndex].IsSpecialGrid)
             {
                 unitSlots[randomXIndex, randomYIndex].IsSpecialGrid = true;
-                count++;
                 GameObject newUnit = Instantiate(specialGridPrefabs, unitSlots[randomXIndex, randomYIndex].transform.position, Quaternion.identity);
                 newUnit.transform.SetParent(unitSlots[randomXIndex, randomYIndex].transform);
                 newUnit.transform.localPosition = Vector3.zero;
+                specialUnits[count] = newUnit.gameObject;
                 Debug.Log(unitSlots[randomXIndex, randomYIndex]);
-                
+                count++;
             }
             else
                 continue;
@@ -348,61 +349,96 @@ public class UnitManager : Singleton<UnitManager>
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            CheckForSpecialMoves(Vector2Int.up);
+            for (int i = 0; i < specialUnits.Length; i++)
+            {
+                if (specialUnits[i].transform.position.y < 0)
+                {
+                    if (i == specialUnits.Length - 1)
+                    {
+                        for (int j = 0; j < specialUnits.Length; j++)
+                        {
+                            Transform current = specialUnits[j].transform;
+                            current.position = new Vector2(current.position.x, current.position.y + 1);
+                            current.SetParent(unitSlots[(int)current.position.x, (int)current.position.y].transform);
+                        }
+                    }
+                }
+                else
+                    break;
+            }
+            //CheckForSpecialMoves(Vector2Int.up);
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            CheckForSpecialMoves(Vector2Int.down);
+
+            //CheckForSpecialMoves(Vector2Int.down);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            CheckForSpecialMoves(Vector2Int.left);
+            //CheckForSpecialMoves(Vector2Int.left);
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            CheckForSpecialMoves(Vector2Int.right);
+            //CheckForSpecialMoves(Vector2Int.right);
         }
 
         onEndMove?.Invoke();
     }
-    void CheckForSpecialMoves(Vector2Int direction)
+    void CheckForSpecialMoves()//Vector2Int direction)
     {
-        List<Vector2Int> newCords = new List<Vector2Int>();
+        //List<Vector2Int> newCords = new List<Vector2Int>();
 
-        foreach(Vector2Int position in spawnedSpecialGrid)
+        //foreach(Vector2Int position in spawnedSpecialGrid)
+        //{
+        //    Vector2Int cords = position + direction;
+
+        //    if (IsMoveable(cords))
+        //    {
+        //        newCords.Add(cords);
+        //    }
+        //    else
+        //        return;
+        //}
+
+        //for(int i = 0; i < spawnedSpecialGrid.Count; i++)
+        //{
+        //    Vector2Int oldPosition = spawnedSpecialGrid[i];
+        //    Vector2Int newPosition = newCords[i];
+
+        //    spawnedSpecialGrid[i] = newPosition;
+        //}
+        for (int i = 0; i < specialUnits.Length; i++)
         {
-            Vector2Int cords = position + direction;
-
-            if (IsMoveable(cords))
+            if (specialUnits[i].transform.position.y < 0)
             {
-                newCords.Add(cords);
+                if (i == specialUnits.Length - 1)
+                {
+                    for (int j = 0; j < specialUnits.Length; j++)
+                    {
+                        Transform current = specialUnits[j].transform;
+                        current.position = new Vector2(current.position.x, current.position.y + 1);
+                        current.SetParent(unitSlots[(int)current.position.x, (int)current.position.y].transform);
+                    }
+                }
             }
             else
-                return;
-        }
-
-        for(int i = 0; i < spawnedSpecialGrid.Count; i++)
-        {
-            Vector2Int oldPosition = spawnedSpecialGrid[i];
-            Vector2Int newPosition = newCords[i];
-
-            spawnedSpecialGrid[i] = newPosition;
+                break;
         }
     }
 
-    bool IsMoveable(Vector2Int position)
-    {
-        Unit unit = ;
-        if (position.x >= 0 && position.x < unitSlots.Length && position.y >= 0 && position.y < unitSlots.Length)
-        {
-            if(unit.UnitType == UnitType.Rock)
-                return unitSlots[position.x, position.y] != unit;
-        }
-        return false;
-    }
+    //bool IsMoveable(Vector2Int position)
+    //{
+    //    Unit unit = ;
+    //    if (position.x >= 0 && position.x < unitSlots.Length && position.y >= 0 && position.y < unitSlots.Length)
+    //    {
+    //        if(unit.UnitType == UnitType.Rock)
+    //            return unitSlots[position.x, position.y] != unit;
+    //    }
+    //    return false;
+    //}
 
     //void CheckForGrid(Unit unit)
     //{
