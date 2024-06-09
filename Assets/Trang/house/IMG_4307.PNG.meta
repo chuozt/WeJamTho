@@ -152,10 +152,10 @@ TextureImporter:
       name: IMG_4307_0
       rect:
         serializedVersion: 2
-        x: 564
-        y: 1615
-        width: 171
-        height: 232
+        x: 481
+        y: 1545
+        width: 337
+        height: 339
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,10 +173,10 @@ TextureImporter:
       name: IMG_4307_1
       rect:
         serializedVersion: 2
-        x: 882
-        y: 1613
-        width: 274
-        height: 256
+        x: 827
+        y: 1562
+        width: 391
+        height: 341
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +194,10 @@ TextureImporter:
       name: IMG_4307_2
       rect:
         serializedVersion: 2
-        x: 1273
-        y: 1610
-        width: 233
-        height: 285
+        x: 1242
+        y: 1586
+        width: 307
+        height: 324
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,10 +236,10 @@ TextureImporter:
       name: IMG_4307_5
       rect:
         serializedVersion: 2
-        x: 192
-        y: 1614
-        width: 160
-        height: 195
+        x: 80
+        y: 1541
+        width: 377
+        height: 343
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
