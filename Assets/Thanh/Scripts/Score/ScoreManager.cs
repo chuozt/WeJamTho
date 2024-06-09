@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : Singleton<ScoreManager>
 {
     List<UnitHouse> houses = new List<UnitHouse>();
     int points = 0;
-    [SerializeField] public TextMeshPro scoreText;
+    //public int Points { get; private set; }
+    [SerializeField] public TMP_Text scoreText;
+    //UnityEvent OnScoreChanged;
     //private UnitSlot[,] unitSlots;
 
     void Start()
@@ -30,7 +33,6 @@ public class ScoreManager : MonoBehaviour
         AddScore();
         //DestroyHouse();
     }
-
     void AddScore()
     {
         UnitHouse mainHouse = houses.Find(h => h.UnitType == UnitType.House);
@@ -39,9 +41,13 @@ public class ScoreManager : MonoBehaviour
         {
             //ADD POINTS
             //house == house.HouseLevel.Equals(HouseLevel.Lv1) + 1;
-            //points += house.HouseLevel.Equals(HouseLevel.Lv1);
-            DestroyHouse(house);
+            //amount += house.HouseLevel.Equals(HouseLevel.Lv1);
+            points += GetPointsPerLevel(house.HouseLevel);
+            Debug.Log(points);
+            points.ToString("Score: " + points);
+            DestroyHouse(house);  
         }
+        return;
         //UnitSlot houseSlot = CheckForAdjacentHouse();
         List<UnitHouse> GetAdjacentHouse(Vector2Int position)
         {
@@ -53,10 +59,30 @@ public class ScoreManager : MonoBehaviour
                 Vector2Int adjacentPosition = position + direction;
                 UnitHouse aHouse = houses.Find(h => h.Position == adjacentPosition && h.UnitType == UnitType.House);
 
-                if(aHouse != null) 
+                if(aHouse != null)
+                {
                     adjacentHouse.Add(aHouse);
+                    Debug.Log(adjacentHouse);
+                }
             }
             return adjacentHouse;
+        }
+    }
+
+    int GetPointsPerLevel(HouseLevel houseLevel)
+    {
+        switch(houseLevel)
+        {
+            case HouseLevel.Lv1:
+                return 1;
+            case HouseLevel.Lv2:
+                return 5;
+            case HouseLevel.Lv3:
+                return 10;
+            case HouseLevel.Lv4:
+                return 25;
+            default:
+                return 0;
         }
     }
 
