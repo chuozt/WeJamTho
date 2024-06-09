@@ -219,7 +219,7 @@ public class UnitManager : Singleton<UnitManager>
 {
     [SerializeField] Labelller[] tilesCords;
     [SerializeField] LayerMask tileLayer;
-    [SerializeField] List<GameObject> housePrefabs;
+    [SerializeField] public List<GameObject> housePrefabs;
     public UnitSlot[,] unitSlots = new UnitSlot[5, 5];
 
     [SerializeField] GameObject specialGridPrefabs;
@@ -468,6 +468,20 @@ public class UnitManager : Singleton<UnitManager>
     bool CheckOutOfBounds(int index1, int subtract1, int index2, int subtract2)
     {
         return ((index1 - subtract1 >= 0 && index1 - subtract1 < 5) && (index2 - subtract2 >= 0 && index2 - subtract2 < 5));
+    }
+
+    public bool IsPositionValid(Vector2Int position)
+    {
+        return position.x >= 0 && position.x < 5 && position.y >= 0 && position.y < 5;
+    }
+
+    public UnitSlot GetUnitSlot(Vector2Int position)
+    {
+        if (IsPositionValid(position))
+        {
+            return unitSlots[position.x, position.y];
+        }
+        return null;
     }
 
     void SelectState(UnitSlot unitSlot, Vector2Int gridCord)

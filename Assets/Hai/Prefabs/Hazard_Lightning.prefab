@@ -73,10 +73,10 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 203347259
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: bd3cb4af8406d4436a2ae8c2aafe1f8d, type: 3}
-  m_Color: {r: 0.9150943, g: 0.47525594, b: 0.055250924, a: 0.654902}
+  m_Sprite: {fileID: 1740886094, guid: 1bbc12b1ef20ec24ca47088afe5ae0c6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.654902}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -121,5 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 1
   hazardType: 2
-  preSpawnMovesLeft: 1
-  movesLeft: 2
+  preSpawnMovesLeft: 2
+  movesLeft: 0
+  isGhostMode: 1
+  initialDirection: {x: 0, y: 1}

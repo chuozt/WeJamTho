@@ -7,7 +7,7 @@ public class UnitHouse : Unit
     [SerializeField] HouseLevel houseLevel;
     bool isLevelMax = false;
     Vector2Int position;
-    public HouseLevel HouseLevel => houseLevel;
+    public HouseLevel HouseLevel { get{ return houseLevel; } set{ houseLevel = value; } }
     public bool IsLevelMax => isLevelMax;
     public Vector2Int Position => position;
 

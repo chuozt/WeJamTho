@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
 {
-    [SerializeField] private List<GameObject> housePrefabs;
-    [SerializeField] private GameObject firePrefab;
-    [SerializeField] private GameObject tornadoPrefab;
-    [SerializeField] private GameObject lightningPrefab;
+    [SerializeField] public List<GameObject> housePrefabs;
+    [SerializeField] public GameObject firePrefab;
+    [SerializeField] public GameObject tornadoPrefab;
+    [SerializeField] public GameObject lightningPrefab;
     [SerializeField] private int numberOfTurnsBeforeHazards = 5;
 
     private int turnCount = 0;
