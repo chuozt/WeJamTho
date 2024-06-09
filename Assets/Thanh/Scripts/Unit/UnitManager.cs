@@ -244,6 +244,36 @@ public class UnitManager : Singleton<UnitManager>
         //spawnedSpecialGrid = new Vector2Int[];
     }
 
+    public void UpdateScore()
+    {
+        for(int i = 0; i < 5 ; i++)
+        {
+            for (int j = 0; j < 5 ; j++)
+            {
+                if (unitSlots[i,j].Unit != null && unitSlots[i,j].Unit.UnitType == UnitType.House)
+                {
+                    //switch ((UnitHouse)unitSlots[i,j].Unit).HouseLevel)
+                    //{
+                    //    case HouseLevel.Lv1:
+                    //        Debug.Log(1);
+                    //        return 1;
+                    //    case HouseLevel.Lv2:
+                    //        Debug.Log(5);
+                    //        return 5;
+                    //    case HouseLevel.Lv3:
+                    //        Debug.Log(10);
+                    //        return 10;
+                    //    case HouseLevel.Lv4:
+                    //        Debug.Log(25);
+                    //        return 25;
+                    //    default:
+                    //        return 0;
+                    //}
+                }
+            }
+        }
+    }
+
     void SaveTilesCordsIn2DArray()
     {
         int currentIndex = 0;

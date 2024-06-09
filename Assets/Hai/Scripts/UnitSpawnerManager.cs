@@ -60,6 +60,7 @@ public class UnitSpawnerManager : Singleton<UnitSpawnerManager>
             emptySlot.Unit = newHouse.GetComponent<Unit>();
         }
         // }
+        //AudioManager.PlaySFX("SpawnSFX");
     }
 
     private void TrySpawnHazard()
