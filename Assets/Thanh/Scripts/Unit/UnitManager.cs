@@ -470,48 +470,6 @@ public class UnitManager : Singleton<UnitManager>
         return ((index1 - subtract1 >= 0 && index1 - subtract1 < 5) && (index2 - subtract2 >= 0 && index2 - subtract2 < 5));
     }
 
-    void CheckForSpecialMoves()//Vector2Int direction)
-    {
-        //List<Vector2Int> newCords = new List<Vector2Int>();
-
-        //foreach(Vector2Int position in spawnedSpecialGrid)
-        //{
-        //    Vector2Int cords = position + direction;
-
-        //    if (IsMoveable(cords))
-        //    {
-        //        newCords.Add(cords);
-        //    }
-        //    else
-        //        return;
-        //}
-
-        //for(int i = 0; i < spawnedSpecialGrid.Count; i++)
-        //{
-        //    Vector2Int oldPosition = spawnedSpecialGrid[i];
-        //    Vector2Int newPosition = newCords[i];
-
-        //    spawnedSpecialGrid[i] = newPosition;
-        //}
-    }
-
-    //bool IsMoveable(Vector2Int position)
-    //{
-    //    Unit unit = ;
-    //    if (position.x >= 0 && position.x < unitSlots.Length && position.y >= 0 && position.y < unitSlots.Length)
-    //    {
-    //        if(unit.UnitType == UnitType.Rock)
-    //            return unitSlots[position.x, position.y] != unit;
-    //    }
-    //    return false;
-    //}
-
-    //void CheckForGrid(Unit unit)
-    //{
-    //    if (unit.UnitType == UnitType.Rock)
-    //        return;
-    //}
-
     void SelectState(UnitSlot unitSlot, Vector2Int gridCord)
     {
         unitSelected = true;

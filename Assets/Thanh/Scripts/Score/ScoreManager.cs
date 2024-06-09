@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
     List<UnitHouse> houses = new List<UnitHouse>();
     int points = 0;
-    private UnitSlot[,] unitSlots;
+    [SerializeField] public TextMeshPro scoreText;
+    //private UnitSlot[,] unitSlots;
 
     void Start()
     {
-        unitSlots = UnitManager.Instance.unitSlots;
+        //unitSlots = UnitManager.Instance.unitSlots;
     }
     void OnEnable()
     {
