@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UnitSlot : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class UnitSlot : MonoBehaviour
         switch (unitHazard.hazardType)
         {
             case HazardType.Fire:
-                HandleFire();
+                StartCoroutine(HandleFire());
                 break;
             case HazardType.Tornado:
                 HandleTornado();
@@ -51,10 +52,16 @@ public class UnitSlot : MonoBehaviour
         }
     }
 
-    void HandleFire()
+    IEnumerator HandleFire()
     {
+        yield return new WaitForSeconds(0.12f);
         if (unit is UnitHouse)
         {
+            if(unit.UnitType == UnitType.MainHouse || ((UnitHouse)unit).HouseLevel == HouseLevel.Main)
+            {
+                SceneManager.LoadScene("LoseScene", LoadSceneMode.Single);
+            }
+
             GameObject rock = Instantiate(UnitSpawnerManager.Instance.rockPrefab, transform.position, Quaternion.identity);
             rock.transform.SetParent(this.transform);
             unit = rock.GetComponent<Unit>();
@@ -70,6 +77,10 @@ public class UnitSlot : MonoBehaviour
         {
             if (unit is UnitHouse)
             {
+                if(unit.UnitType == UnitType.MainHouse || ((UnitHouse)unit).HouseLevel == HouseLevel.Main)
+                {
+                    SceneManager.LoadScene("LoseScene", LoadSceneMode.Single);
+                }
                 // GameObject rock = Instantiate(UnitSpawnerManager.Instance.rockPrefab, transform.position, Quaternion.identity);
                 // rock.transform.SetParent(this.transform);
                 // unit = rock.GetComponent<Unit>();

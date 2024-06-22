@@ -313,7 +313,7 @@ public class UnitManager : Singleton<UnitManager>
     {
         if(PauseMenuManager.Instance.isPausing)
             return;
-            
+
         if (Input.GetMouseButtonDown(0)) // Left mouse button
         {
             // Convert mouse position to world position
@@ -592,12 +592,14 @@ public class UnitManager : Singleton<UnitManager>
         GameObject newUnit = Instantiate(housePrefabs[index], Vector3.zero, Quaternion.identity);
         newUnit.transform.SetParent(slot2.Unit.transform.parent);
         newUnit.transform.localPosition = Vector3.zero;
+        
         Destroy(slot1.Unit.gameObject);
         Destroy(slot2.Unit.gameObject);
         slot2.Unit = newUnit.GetComponent<Unit>();
 
         if(unitSelected)
             DeselectState();
+        
         onEndMove?.Invoke();
     }
 

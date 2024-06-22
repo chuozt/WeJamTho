@@ -17,12 +17,12 @@ public class Labelller : MonoBehaviour
         gridManager = FindObjectOfType<GridManager>();
         label = GetComponentInChildren<TextMeshPro>();
 
-        DisplayCords();
+        //DisplayCords();
     }
 
     public void Update()
     {
-        DisplayCords();
+        //DisplayCords();
         transform.name = cords.ToString();
     }
 

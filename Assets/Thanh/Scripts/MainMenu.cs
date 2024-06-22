@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        //SceneManager.LoadScene();
+        SceneManager.LoadScene(1);
     }
 
 }
